@@ -12,7 +12,9 @@
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="register">Register</v-btn>
-        <v-alert v-if="response" dense outlined :type="response.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ response.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="response" dense outlined :type="response.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ response.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>

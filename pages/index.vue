@@ -9,7 +9,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="addList">Add</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showAddListPrompt = false">Cancel</v-btn>
-        <v-alert v-if="addListResponse" dense outlined :type="addListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ addListResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="addListResponse" dense outlined :type="addListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ addListResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
@@ -25,7 +27,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="delList(selectedList.id)">Yes</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showDelListPrompt = false">Cancel</v-btn>
-        <v-alert v-if="delListResponse" dense outlined :type="delListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ delListResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="delListResponse" dense outlined :type="delListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ delListResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
@@ -41,7 +45,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="editList(selectedList.id)">Yes</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showEditListPrompt = false">Cancel</v-btn>
-        <v-alert v-if="editListResponse" dense outlined :type="editListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ editListResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="editListResponse" dense outlined :type="editListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ editListResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
@@ -59,7 +65,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="addTask(selectedList.id)">Add</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showAddTaskPrompt = false">Cancel</v-btn>
-        <v-alert v-if="addTaskResponse" dense outlined :type="addTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ addTaskResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="addTaskResponse" dense outlined :type="addTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ addTaskResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
@@ -75,7 +83,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="delTask(selectedTask.id)">Yes</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showDelTaskPrompt = false">Cancel</v-btn>
-        <v-alert v-if="delTaskResponse" dense outlined :type="delTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ delTaskResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="delTaskResponse" dense outlined :type="delTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ delTaskResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
@@ -94,7 +104,9 @@
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="editTask">Yes</v-btn>
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showEditTaskPrompt = false">Cancel</v-btn>
-        <v-alert v-if="editTaskResponse" dense outlined :type="editTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ editTaskResponse.msg }} </v-alert>
+        <v-col sm="6">
+          <v-alert v-if="editTaskResponse" dense outlined :type="editTaskResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ editTaskResponse.msg }} </v-alert>
+        </v-col>
       </center>
     </v-container>
   </v-card>
