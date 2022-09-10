@@ -50,7 +50,7 @@ export default function ({ store, app }, inject) {
       const response = await sendRequestAsync(payload)
       if (response) return response.data
     },
-    async editList(listName, listId) {
+    async editList(listId, listName) {
       const user = store.state.session.user
       const payload = createPayload('/list', { listId, listName }, 'PUT', user.session)
       const response = await sendRequestAsync(payload)

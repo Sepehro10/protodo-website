@@ -13,7 +13,7 @@
           <v-btn outlined color="primary" :to="{ path: '/register' }">register</v-btn>
         </v-container>
 
-        <div style="min-width: 36px; min-height: 44px; height: 100%; padding: 0.4rem 0; margin-left: -3rem">
+        <div style="min-width: 36px; min-height: 44px; height: 100%; padding: 0.4rem 0; margin-left: -4rem">
           <nuxt-link :to="{ path: '/' }"><img :src="logo" alt="logo" style="height: 100%; min-height: 44px" /> </nuxt-link>
         </div>
       </v-container>

@@ -4,7 +4,7 @@
     <v-container>
       <center>
         <v-col sm="6">
-          <v-text-field v-model="listName" label="name" outlined clearable></v-text-field>
+          <v-text-field v-model="listName" label="name" outlined clearable required></v-text-field>
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="addList">Add</v-btn>
@@ -30,14 +30,31 @@
     </v-container>
   </v-card>
 
+  <v-card v-else-if="showEditListPrompt" :loading="loading">
+    <v-card-title>Edit List</v-card-title>
+    <v-container>
+      <center>
+        <v-col sm="6">
+          <v-card-text> {{ selectedList.listName }} </v-card-text>
+          <v-text-field v-model="listName" label="name" outlined clearable required></v-text-field>
+        </v-col>
+
+        <v-btn color="primary" larger width="12rem" :disabled="loading" @click="editList(selectedList.id)">Yes</v-btn>
+        <v-btn color="primary" larger width="12rem" :disabled="loading" @click="showEditListPrompt = false">Cancel</v-btn>
+        <v-alert v-if="editListResponse" dense outlined :type="editListResponse.success ? 'success' : 'error'" style="margin-top: 2rem"> {{ editListResponse.msg }} </v-alert>
+      </center>
+    </v-container>
+  </v-card>
+
   <v-card v-else-if="showAddTaskPrompt" :loading="loading">
     <v-card-title>Add new Task now todo later</v-card-title>
     <v-container>
       <center>
         <v-col sm="6">
-          <v-text-field v-model="taskName" label="task name" outlined clearable></v-text-field>
+          <v-text-field v-model="taskName" label="task name" outlined clearable required></v-text-field>
           <v-text-field v-model="description" label="description" outlined clearable></v-text-field>
-          <v-checkbox v-model="completed" label="DONE" color="success" value="true" hide-details></v-checkbox>
+          <v-checkbox v-model="completed" label="I have already Completed this task" color="success" value="true" hide-details
+          style="margin-bottom: 2rem; margin-top: -0.7rem"></v-checkbox>
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="addTask(selectedList.id)">Add</v-btn>
@@ -52,10 +69,8 @@
     <v-container>
       <center>
         <v-col sm="6">
-          <v-card-text>Edit {{ selectedTask.todoName }} :</v-card-text>
-          <v-text-field v-model="taskName" label="task name" outlined clearable></v-text-field>
-          <v-text-field v-model="description" label="description" outlined clearable></v-text-field>
-          <v-checkbox v-model="completed" label="DONE" color="success" value="true" hide-details></v-checkbox>
+          <v-card-text>Delete {{ selectedTask.todoName }} ?</v-card-text>
+          <v-card-text>listId: {{ selectedTask.id }} ?</v-card-text>
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="delTask(selectedTask.id)">Yes</v-btn>
@@ -71,9 +86,10 @@
       <center>
         <v-col sm="6">
           <v-card-text> {{ selectedTask.todoName }} </v-card-text>
-          <v-text-field v-model="taskName" label="task name" outlined clearable></v-text-field>
+          <v-text-field v-model="taskName" label="task name" outlined clearable required></v-text-field>
           <v-text-field v-model="description" label="description" outlined clearable></v-text-field>
-          <v-checkbox v-model="completed" label="DONE" color="success" value="true" hide-details></v-checkbox>
+          <v-checkbox v-model="completed" label="I have already Completed this task" color="success" value="true" hide-details
+          style="margin-bottom: 2rem; margin-top: -0.7rem"></v-checkbox>
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="editTask">Yes</v-btn>
@@ -84,14 +100,16 @@
   </v-card>
   
   <v-row v-else>
-    <v-col cols="2">
+    <v-col cols="3">
       <v-sheet rounded="lg">
         <v-list color="transparent">
           <v-list-item v-for="list in lists" :key="list.id" link>
             <v-list-item-content @click="selectedList = list">
               <v-list-item-title> {{ list.listName }} </v-list-item-title>
             </v-list-item-content>
-            <v-btn icon outlined x-small color="red" style="margin-right: -5px" 
+            <v-btn icon x-small color="red" style="margin-right: -3px" 
+            @click="selectedList = list; showEditListPrompt = true">✏️</v-btn>
+            <v-btn icon x-small color="red" style="margin-right: -13px" 
             @click="selectedList = list; showDelListPrompt = true">❌</v-btn>
           </v-list-item>
 
@@ -156,6 +174,7 @@ export default {
     return {
       showAddListPrompt: false,
       showDelListPrompt: false,
+      showEditListPrompt: false,
       showAddTaskPrompt: false,
       showDelTaskPrompt: false,
       showEditTaskPrompt: false,
@@ -163,6 +182,7 @@ export default {
       loading: false,
       addListResponse: '',
       delListResponse: '',
+      editListResponse: '',
       taskName: '',
       description: '',
       completed: '',
@@ -218,6 +238,22 @@ export default {
         this.lists = this.lists.filter((item) => item.id != listId)
         this.showDelListPrompt = false
         this.delListResponse = ''
+        this.selectedList = ''
+        await this.getLists()
+      }
+      this.loading = false
+    },
+    async editList(listId) {
+      if (this.loading) return
+      this.loading = true
+      this.editListResponse = ''
+      await new Promise((resolve) => setTimeout(resolve, 1000))
+      const res = await this.$api.editList(listId, this.listName)
+      this.editListResponse = res
+      if (res.success) {
+        await new Promise((resolve) => setTimeout(resolve, 500))
+        this.showEditListPrompt = false
+        this.editListResponse = ''
         this.selectedList = ''
         await this.getLists()
       }

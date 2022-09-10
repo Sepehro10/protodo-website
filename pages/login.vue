@@ -4,10 +4,11 @@
     <v-container>
       <center>
         <v-col sm="6">
-          <v-text-field v-model="username" label="username" outlined clearable></v-text-field>
+          <v-text-field v-model="username" label="username" outlined clearable required></v-text-field>
         </v-col>
         <v-col sm="6">
-          <v-text-field v-model="password" label="password" outlined clearable @keypress.enter="login"></v-text-field>
+          <v-text-field v-model="password" label="password" outlined clearable required
+          :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'" :type="show1 ? 'text' : 'password'" @keypress.enter="login" @click:append="show1 = !show1"></v-text-field>
         </v-col>
 
         <v-btn color="primary" larger width="12rem" :disabled="loading" @click="login">Login</v-btn>
@@ -23,6 +24,7 @@ export default {
     return {
       username: '',
       password: '',
+      show1: false,
       response: '',
       loading: false
     }
